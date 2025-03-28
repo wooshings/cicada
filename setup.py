@@ -8,7 +8,7 @@ setup(
     author='wooshings',
     description=(
         'Easy to use library for building Escape Game puzzles using MQTT.'
-    )
+    ),
     long_description=open('README.md').read(),
     include_package_data=True,
     packages=['cicada'],
