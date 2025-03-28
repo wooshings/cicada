@@ -11,6 +11,6 @@ setup(
     ),
     long_description=open('README.md').read(),
     include_package_data=True,
-    packages=['cicada'],
+    packages=['Cicada'],
     install_requires=['paho-mqtt']
 )
