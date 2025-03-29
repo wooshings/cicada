@@ -27,10 +27,13 @@ class Nymph():
     async def start_process(self):
         self._ready()
         while True:
-            self.mqttc.loop_read()
-            self._process()
-            self.mqttc.loop_write()
-            sleep(0.05)
+            try:
+                self.mqttc.loop_read()
+                self._process()
+                self.mqttc.loop_write()
+                sleep(0.05)
+            except KeyboardInterrupt:
+                print("Stopping program. Goodbye!")
 
     def _ready(self):
         pass
