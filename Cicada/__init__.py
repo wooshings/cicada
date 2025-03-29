@@ -85,7 +85,10 @@ class Pin():
         self.mode = mode
 
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(pin, mode, pull_up_down=GPIO.PUD_DOWN)
+        if mode == GPIO.IN:
+            GPIO.setup(pin, mode, pull_up_down=GPIO.PUD_UP)
+        else:
+            GPIO.setup(pin, mode)
 
     def value(self):
         if self.mode != GPIO.IN: print(f"Pin {self.pin} is not an input")
