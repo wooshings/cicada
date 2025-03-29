@@ -84,7 +84,7 @@ class Pin():
         self.pin = pin
         self.mode = mode
 
-        GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(GPIO.BCM)
         GPIO.setup(pin, mode)
 
     def value(self):
