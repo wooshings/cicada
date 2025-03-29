@@ -33,7 +33,7 @@ class Nymph():
                 self.mqttc.loop_write()
                 sleep(0.05)
             except KeyboardInterrupt:
-                print("Stopping program. Goodbye!")
+                print("\nStopping program. Goodbye!")
                 quit()
 
     def _ready(self):
