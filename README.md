@@ -37,6 +37,7 @@ Cicada exposes several functions through the Nymph class, but the two most impor
 
 - Runs once every tick.
   - One tick is 1/20th of a second.
+  - Can be adjusted with `self.tick_speed`
 - Used for code that needs to be run repeatedly.
 
 ### Pins

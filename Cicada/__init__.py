@@ -9,6 +9,7 @@ class Nymph():
         self.port = port
         self.topics = topics 
         self.mqttc = mqtt.Client()
+        self.tick_speed = 20
         
         self.start()
         asyncio.run(self.start_process())
@@ -27,7 +28,7 @@ class Nymph():
                 self.mqttc.loop_read()
                 self._process()
                 self.mqttc.loop_write()
-                sleep(0.05)
+                sleep(1/self.tick_speed)
             except KeyboardInterrupt:
                 print("\nStopping program. Goodbye!")
                 quit()
