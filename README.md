@@ -4,7 +4,9 @@ An easy to use python library for creating Escape Room puzzles using Raspberry P
 
 ## Install
 
-`pip install git+https://github.com/wooshdude/cicada`
+```
+pip install git+https://github.com/wooshdude/cicada
+```
 
 ## Setup
 
