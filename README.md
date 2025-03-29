@@ -8,7 +8,9 @@ An easy to use python library for creating Escape Room puzzles using Raspberry P
 pip install git+https://github.com/wooshdude/cicada
 ```
 
-## Setup
+## How to use
+
+### Nodes
 
 Cicada uses Nodes (called Nymphs), which are decorated subclasses.
 
@@ -16,7 +18,12 @@ Cicada uses Nodes (called Nymphs), which are decorated subclasses.
 from Cicada import Nymph, Node
 
 @Node
-class Main(Nymph)
+class Main(Nymph):
+    def _ready(self):
+        # Runs once at the start of the program
+
+    def _process(self):
+        # Runs every tick
 ```
 
 Cicada exposes several functions through the Nymph class, but the two most important are `_ready` and `_process`.
@@ -33,6 +40,8 @@ Cicada exposes several functions through the Nymph class, but the two most impor
 - Runs once every tick.
   - One tick is 1/20th of a second.
 - Used for code that needs to be run repeatedly.
+
+### Pins
 
 Cicada also allows for easy use of the Raspberry Pi's GPIO pins, using the Pin class. Creating a pin takes two parameters, the pin number, and the mode.
 
@@ -59,7 +68,7 @@ Pins have several helpful methods:
 - is_just_pressed()
   - The same as is_pressed, but only triggers once per input
 
-## Network Node
+### Network Node
 
 Cicada has optional support for MQTT using the NetworkNode decorator.
 
@@ -68,7 +77,12 @@ from Cicada import Nymph, NetworkNode
 
 topics = ["topics to subscribe to go here"]
 @NetworkNode("localhost", 1883, topics)
-class Main(Nymph)
+class Main(Nymph):
+    def _on_connect():
+        # Runs when the Node connects to a broker
+
+    def _on_message(msg):
+        # Runs every time a message is received
 ```
 
 A Network Node works the same as a Node, but offers a few extra functions tailored for MQTT.
