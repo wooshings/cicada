@@ -34,6 +34,7 @@ class Nymph():
                 sleep(0.05)
             except KeyboardInterrupt:
                 print("Stopping program. Goodbye!")
+                break
 
     def _ready(self):
         pass
