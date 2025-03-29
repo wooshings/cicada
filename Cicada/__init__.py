@@ -4,11 +4,6 @@ import asyncio
 import RPi.GPIO as GPIO
 
 class Nymph():
-    host: str
-    port: int
-    topics: list[str]
-    mqttc: mqtt.Client
-
     def __init__(self, host: str, port: int, topics: list) -> None:
         self.host = host
         self.port = port
@@ -19,6 +14,7 @@ class Nymph():
         asyncio.run(self.start_process())
 
     def start(self):
+        if self.host == "": return
         self.mqttc.connect(self.host, self.port, 60)
 
         self.mqttc.on_connect = self.connect_callback
@@ -49,6 +45,7 @@ class Nymph():
         pass
 
     def publish(self, topic, msg):
+        if self.host == "": print("Cannot publish using type Node. Try creating a NetworkNode instead.")
         self.mqttc.publish(topic, msg)
 
     def connect_callback(self, client, userdata, flags, reason_code):
@@ -61,9 +58,6 @@ class Nymph():
         self._on_message(msg)
 
 class Property():
-    default = 0
-    value = 0
-
     def __init__(self, default) -> None:
         self.default = default
         self.value = default
@@ -74,28 +68,54 @@ class Property():
     def get_value(self):
         return str(self.value)
 
-def Node(host="localhost", port=1883, topics=[]):
+def NetworkNode(host="localhost", port=1883, topics=[]):
     def wrapper(cls):
         new_node = cls(host, port, topics)
         return new_node
     return wrapper
 
+def Node():
+    def wrapper(cls):
+        new_node = cls("", 0, [])
+        return new_node
+    return wrapper
+
 
 class Pin():
-    pressed:bool = False
+    IN = GPIO.IN
+    OUT = GPIO.OUT
 
     def __init__(self, pin, mode) -> None:
         self.pin = pin
         self.mode = mode
+        self.pressed = False
+        self.is_on = True
 
         GPIO.setmode(GPIO.BCM)
         if mode == GPIO.IN:
             GPIO.setup(pin, mode, pull_up_down=GPIO.PUD_UP)
         else:
             GPIO.setup(pin, mode)
+            self.on()
+
+    def on(self):
+        if self.mode == self.IN: print(f"Pin {self.pin} is not an output."); return
+        self.is_on = True
+        GPIO.output(self.pin, 1)
+
+    def off(self):
+        if self.mode == self.IN: print(f"Pin {self.pin} is not an output."); return
+        self.is_on = False
+        GPIO.output(self.pin, 0)
+
+    def toggle(self):
+        if self.is_on:
+            self.off()
+        elif not self.is_on:
+            self.on()
 
     def value(self):
-        if self.mode != GPIO.IN: print(f"Pin {self.pin} is not an input")
+        if self.mode != GPIO.IN: print(f"Pin {self.pin} is not an input."); return
         if GPIO.input(self.pin): return 0
         return 1
 
