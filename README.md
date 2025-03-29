@@ -20,10 +20,8 @@ from Cicada import Nymph, Node
 @Node
 class Main(Nymph):
     def _ready(self):
-        # Runs once at the start of the program
 
     def _process(self):
-        # Runs every tick
 ```
 
 Cicada exposes several functions through the Nymph class, but the two most important are `_ready` and `_process`.
@@ -79,10 +77,8 @@ topics = ["topics to subscribe to go here"]
 @NetworkNode("localhost", 1883, topics)
 class Main(Nymph):
     def _on_connect():
-        # Runs when the Node connects to a broker
 
     def _on_message(msg):
-        # Runs every time a message is received
 ```
 
 A Network Node works the same as a Node, but offers a few extra functions tailored for MQTT.
