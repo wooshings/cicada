@@ -89,8 +89,8 @@ class Pin():
 
     def value(self):
         if self.mode != GPIO.IN: print(f"Pin {self.pin} is not an input")
-        if GPIO.input(self.pin): return 1
-        return 0
+        if GPIO.input(self.pin): return 0
+        return 1
 
     def is_pressed(self):
         if self.value() == 1:
