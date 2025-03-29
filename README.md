@@ -74,17 +74,17 @@ A Network Node works the same as a Node, but offers a few extra functions tailor
 **On Message**
 `_on_message(msg)`
 
-Triggered when a subscribed topic receives a message. Carries the msg object.
+- Triggered when a subscribed topic receives a message. Carries the msg object.
 
 **On Connect**
 `_on_connect()`
 
-Triggered when the Node connects to the broker.
+- Triggered when the Node connects to the broker.
 
 **Publish**
 `publish(topic, payload)`
 
-Publishes a payload to a specified topic.
+- Publishes a payload to a specified topic.
 
 ## Examples
 
