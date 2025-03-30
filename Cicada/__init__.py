@@ -126,12 +126,12 @@ class Pin():
         return False
 
     def is_just_pressed(self):
-        if self.value() == 0 and self.pressed: return False
+        if self.value() == 1 and self.pressed: return False
 
-        if self.value() == 0 and not self.pressed:
+        if self.value() == 1 and not self.pressed:
             self.pressed = True
             return True
-        elif self.value() == 1 and self.pressed:
+        elif self.value() == 0 and self.pressed:
             self.pressed = False
             return False
 
