@@ -90,6 +90,7 @@ class Pin():
         self.pin = pin
         self.mode = mode
         self.pressed = False
+        self.released = True
         self.is_on = True
 
         GPIO.setmode(GPIO.BCM)
@@ -126,14 +127,26 @@ class Pin():
         return False
 
     def is_just_pressed(self):
-        if self.value() == 1 and self.pressed: return False
+        if self.is_pressed() and self.pressed: return False
 
-        if self.value() == 1 and not self.pressed:
+        if self.is_pressed() and not self.pressed:
             self.pressed = True
             return True
-        elif self.value() == 0 and self.pressed:
+
+        elif not self.is_pressed() and self.pressed:
             self.pressed = False
             return False
+    
+    def is_just_released(self):
+        if self.is_pressed() and self.released: return False
+
+        if self.is_pressed() and not self.released:
+            self.released = False
+            return False
+
+        elif not self.is_pressed() and self.released:
+            self.released= True
+            return True
 
 
 
