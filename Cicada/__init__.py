@@ -138,14 +138,12 @@ class Pin():
             return False
     
     def is_just_released(self):
-        if self.is_pressed() and self.released: return False
-
-        if self.is_pressed() and not self.released:
+        if self.is_pressed() and self.released:
             self.released = False
             return False
 
-        elif not self.is_pressed() and self.released:
-            self.released= True
+        elif not self.is_pressed() and not self.released:
+            self.released = True
             return True
 
 
