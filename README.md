@@ -15,7 +15,7 @@ pip install git+https://github.com/wooshdude/cicada
 Cicada uses Nodes (called Nymphs), which are decorated subclasses.
 
 ```python
-from Cicada import Nymph, Node
+from Cicada.RPi import Nymph, Node
 
 @Node
 class Main(Nymph):
@@ -45,7 +45,7 @@ Cicada exposes several functions through the Nymph class, but the two most impor
 Cicada also allows for easy use of the Raspberry Pi's GPIO pins, using the Pin class. Creating a pin takes two parameters, the pin number, and the mode.
 
 ```python
-from Cicada import Pin
+from Cicada.RPi import Pin
 
 pin = 4         # The GPIO pin on the raspberry pi
 mode = Pin.OUT  # The pin mode, IN for input, OUT for output
@@ -72,7 +72,7 @@ Pins have several helpful methods:
 Cicada has optional support for MQTT using the NetworkNode decorator.
 
 ```python
-from Cicada import Nymph, NetworkNode
+from Cicada.RPi import Nymph, NetworkNode
 
 topics = ["topics to subscribe to go here"]
 @NetworkNode("localhost", 1883, topics)
@@ -104,7 +104,7 @@ A Network Node works the same as a Node, but offers a few extra functions tailor
 ### Node Example
 
 ```python
-from Cicada import Nymph, Node, Pin
+from Cicada.RPi import Nymph, Node, Pin
 
 @Node
 class Main(Nymph):
@@ -126,7 +126,7 @@ class Main(Nymph):
 ### NetworkNode Example
 
 ```python
-from Cicada import Nymph, Node, Pin
+from Cicada.RPi import Nymph, Node, Pin
 
 topics = ["test/one", "test/two"]
 @NetworkNode("localhost", 1883, topics)
