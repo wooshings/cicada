@@ -3,6 +3,18 @@ from time import sleep
 import asyncio
 import RPi.GPIO as GPIO
 
+processes = []
+def add_process():
+    def wrapper(func):
+        processes.append(func)
+        return func
+    return wrapper
+
+async def run_process():
+    for p in processes:
+        p()
+asyncio.run(run_process())
+
 class Nymph():
     def __init__(self, host: str, port: int, topics: list) -> None:
         self.host = host
@@ -12,6 +24,7 @@ class Nymph():
         self.tick_speed = 20
         
         self.start()
+        self._ready()
         asyncio.run(self.start_process())
 
     def start(self):
@@ -21,17 +34,16 @@ class Nymph():
         self.mqttc.on_connect = self.connect_callback
         self.mqttc.on_message = self.message_callback
 
+    @add_process()
     async def start_process(self):
-        self._ready()
-        while True:
-            try:
-                self.mqttc.loop_read()
-                self._process()
-                self.mqttc.loop_write()
-                sleep(1/self.tick_speed)
-            except KeyboardInterrupt:
-                print("\nStopping program. Goodbye!")
-                quit()
+        try:
+            self.mqttc.loop_read()
+            self._process()
+            self.mqttc.loop_write()
+            sleep(1/self.tick_speed)
+        except KeyboardInterrupt:
+            print("\nStopping program. Goodbye!")
+            quit()
 
     def _ready(self):
         pass
