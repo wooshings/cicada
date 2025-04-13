@@ -1,6 +1,6 @@
 # cicada
 
-> :warning: This library is still in early development and updates may break your projects when updating.
+> :warning: This library is still in early development and updates may break your projects.
 
 An easy to use python library for creating Escape Room puzzles using Raspberry Pi, built to feel like a Game Engine.
 
