@@ -30,3 +30,8 @@ WantedBy=multi-user.target''')
 
 if __name__ == "__main__":
     main()
+
+# sudo mv /etc/systemd/system/myscript.service
+# sudo systemctl daemon-reload
+# sudo systemctl enable myscript.service
+# sudo systemctl start myscript.service
