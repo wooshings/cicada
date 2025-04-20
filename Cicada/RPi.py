@@ -4,31 +4,36 @@ import asyncio
 import RPi.GPIO as GPIO
 
 processes = []
+
+
 def add_process():
     def wrapper(func):
         processes.append(func)
         return func
     return wrapper
 
+
 async def run_process():
     for p in processes:
         p()
 asyncio.run(run_process())
 
+
 class Nymph():
     def __init__(self, host: str, port: int, topics: list) -> None:
         self.host = host
         self.port = port
-        self.topics = topics 
+        self.topics = topics
         self.mqttc = mqtt.Client()
         self.tick_speed = 20
-        
+
         self.start()
         self._ready()
         asyncio.run(self.start_process())
 
     def start(self):
-        if self.host == "": return
+        if self.host == "":
+            return
         self.mqttc.connect(self.host, self.port, 60)
 
         self.mqttc.on_connect = self.connect_callback
@@ -58,7 +63,8 @@ class Nymph():
         pass
 
     def publish(self, topic, msg):
-        if self.host == "": print("Cannot publish using type Node. Try creating a NetworkNode instead.")
+        if self.host == "":
+            print("Cannot publish using type Node. Try creating a NetworkNode instead.")
         self.mqttc.publish(topic, msg)
 
     def connect_callback(self, client, userdata, flags, reason_code):
@@ -70,6 +76,7 @@ class Nymph():
     def message_callback(self, client, userdata, msg):
         self._on_message(msg)
 
+
 class Property():
     def __init__(self, default) -> None:
         self.default = default
@@ -77,15 +84,17 @@ class Property():
 
     def reset(self):
         self.value = self.default
-    
+
     def get_value(self):
         return str(self.value)
+
 
 def NetworkNode(host="localhost", port=1883, topics=[]):
     def wrapper(cls):
         new_node = cls(host, port, topics)
         return new_node
     return wrapper
+
 
 def Node():
     def wrapper(cls):
@@ -113,12 +122,16 @@ class Pin():
             self.on()
 
     def on(self):
-        if self.mode == self.IN: print(f"Pin {self.pin} is not an output."); return
+        if self.mode == self.IN:
+            print(f"Pin {self.pin} is not an output.")
+            return
         self.is_on = True
         GPIO.output(self.pin, 1)
 
     def off(self):
-        if self.mode == self.IN: print(f"Pin {self.pin} is not an output."); return
+        if self.mode == self.IN:
+            print(f"Pin {self.pin} is not an output.")
+            return
         self.is_on = False
         GPIO.output(self.pin, 0)
 
@@ -129,8 +142,11 @@ class Pin():
             self.on()
 
     def value(self):
-        if self.mode != GPIO.IN: print(f"Pin {self.pin} is not an input."); return
-        if GPIO.input(self.pin): return 1
+        if self.mode != GPIO.IN:
+            print(f"Pin {self.pin} is not an input.")
+            return
+        if GPIO.input(self.pin):
+            return 1
         return 0
 
     def is_pressed(self):
@@ -139,7 +155,8 @@ class Pin():
         return False
 
     def is_just_pressed(self):
-        if self.is_pressed() and self.pressed: return False
+        if self.is_pressed() and self.pressed:
+            return False
 
         if self.is_pressed() and not self.pressed:
             self.pressed = True
@@ -148,7 +165,7 @@ class Pin():
         elif not self.is_pressed() and self.pressed:
             self.pressed = False
             return False
-    
+
     def is_just_released(self):
         if self.is_pressed() and self.released:
             self.released = False
@@ -157,9 +174,3 @@ class Pin():
         elif not self.is_pressed() and not self.released:
             self.released = True
             return True
-
-
-
-
-
-
