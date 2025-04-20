@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='cicada',
-    version='0.2.1',
+    version='0.2.2',
     url='https://github.com/wooshdude/cicada',
     author='wooshings',
     description=(
@@ -12,5 +12,5 @@ setup(
     long_description=open('README.md').read(),
     include_package_data=True,
     packages=['Cicada'],
-    install_requires=['paho-mqtt','RPi.GPIO']
+    install_requires=['paho-mqtt', 'RPi.GPIO']
 )

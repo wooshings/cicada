@@ -1,6 +1,6 @@
 # cicada
 
-> :warning: This library is still in early development and updates may break your projects.
+> :warning: This library is still in early development and updates may break your projects when updating.
 
 An easy to use python library for creating Escape Room puzzles using Raspberry Pi, built to feel like a Game Engine.
 
@@ -157,3 +157,7 @@ class Main(Nymph):
             self.publish("test/two", "hello back")
 
 ```
+
+## Service
+More than likely, your Raspberry Pi will be frequently rebooted. In that case, scripts should automatically be run once the device has fully booted.
+Cicada offers a simple python script that generates a service file. Simply run `serve.py` with the name of your project e.g. `serve.py test_project`.
