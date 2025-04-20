@@ -160,4 +160,4 @@ class Main(Nymph):
 
 ## Service
 More than likely, your Raspberry Pi will be frequently rebooted. In that case, scripts should automatically be run once the device has fully booted.
-Cicada offers a simple python script that generates a service file. Simply run `serve.py` with the name of your project e.g. `serve.py test_project`.
+Cicada offers a simple python script that generates a service file. Simply run `serve.py` or run `curl https://raw.githubusercontent.com/wooshings/cicada/refs/heads/main/serve.py > tmp_serve.py && python3 tmp_serve.py && rm tmp_serve.py` in your terminal.
