@@ -6,8 +6,24 @@ An easy to use python library for creating Escape Room puzzles using Raspberry P
 
 ## Install
 
+Using Python-pip
+
 ```
-pip install git+https://github.com/wooshdude/cicada
+pip install "git+https://github.com/wooshdude/cicada[all]"
+```
+
+Using UV
+
+```
+uv add "git+https://github.com/wooshdude/cicada[all]"
+```
+
+If you want to write your script on a machine that isn't a Raspberry Pi, you can install Cicada with fallback dependencies.
+
+```
+pip install "git+https://github.com/wooshdude/cicada[fallback]"
+    -- or --
+uv install "git+https://github.com/wooshdude/cicada[fallback]"
 ```
 
 ## How to use
@@ -159,5 +175,6 @@ class Main(Nymph):
 ```
 
 ## Service
+
 More than likely, your Raspberry Pi will be frequently rebooted. In that case, scripts should automatically be run once the device has fully booted.
 Cicada offers a simple python script that generates a service file. Simply run `serve.py` or run `curl https://raw.githubusercontent.com/wooshings/cicada/refs/heads/main/serve.py > tmp_serve.py && python3 tmp_serve.py && rm tmp_serve.py` in your terminal.
