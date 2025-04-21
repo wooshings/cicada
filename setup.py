@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='cicada',
-    version='0.2.6',
+    version='0.2.7',
     url='https://github.com/wooshdude/cicada',
     author='wooshings',
     description=(
