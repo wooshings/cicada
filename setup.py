@@ -12,7 +12,7 @@ setup(
     long_description=open('README.md').read(),
     include_package_data=True,
     packages=['Cicada'],
-    install_requires=['paho-mqtt', 'RPi.GPIO'],
+    #install_requires=['paho-mqtt', 'RPi.GPIO'],
     extras_require={
         'fallback': ['paho-mqtt'],
         'all': ['paho-mqtt', 'RPi.GPIO'],
