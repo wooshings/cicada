@@ -1,6 +1,16 @@
 import paho.mqtt.client as mqtt
 from time import sleep
 import asyncio
+import importlib.util
+import sys
+
+try:
+    importlib.util.find_spec("RPi.GPIO")
+except ImportError:
+    import fake_rpi
+    sys.modules['RPi'] = fake_rpi.RPi     # Fake RPi
+    sys.modules['RPi.GPIO'] = fake_rpi.RPi.GPIO # Fake GPIO
+
 import RPi.GPIO as GPIO
 
 processes = []
