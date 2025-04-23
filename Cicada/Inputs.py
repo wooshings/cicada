@@ -1,17 +1,31 @@
-from Cicada.RPi import Pin, add_process
+from Cicada.RPi import Pin
 
-class Dial():
-	def __init__(self, pin1, pin2) -> None:
-		self.left_pin = Pin(pin1, Pin.IN)
-		self.right_pin = Pin(pin2, Pin.IN)
 
-	@add_process()
-	def process(self):
-		if self.left_pin.is_just_pressed():
-			self._on_rotation(-1)
-		elif self.right_pin.is_just_pressed():
-			self._on_rotation(1)
+class Button(Pin):
+    def __init__(self, pin) -> None:
+        super().__init__(pin, Pin.IN)
 
-	def _on_rotation(self, dir):
-		pass
+    def is_pressed(self):
+        if self.value() == 0:
+            return True
+        return False
 
+    def is_just_pressed(self):
+        if self.is_pressed() and self.pressed: return False
+
+        if self.is_pressed() and not self.pressed:
+            self.pressed = True
+            return True
+
+        elif not self.is_pressed() and self.pressed:
+            self.pressed = False
+            return False
+
+    def is_just_released(self):
+        if self.is_pressed() and self.released:
+            self.released = False
+            return False
+
+        elif not self.is_pressed() and not self.released:
+            self.released = True
+            return True
