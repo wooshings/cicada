@@ -4,7 +4,7 @@
 
 <br>
 
-<img src="logo.png" alt="cicada logo" width="128"/>
+<img src="banner.png" alt="cicada logo"/> 
 
 <br>
 An easy to use python library for creating Escape Room puzzles using Raspberry Pi, built to feel like a Game Engine.
