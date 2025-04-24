@@ -1,7 +1,12 @@
 # cicada
 
-> :warning: This library is still in early development and updates may break your projects when updating.
+> :warning: This library is still in early development and updating your projects may cause breaking changes.
 
+<br>
+
+<img src="logo.png" alt="cicada logo" width="128"/>
+
+<br>
 An easy to use python library for creating Escape Room puzzles using Raspberry Pi, built to feel like a Game Engine.
 
 ## Install
