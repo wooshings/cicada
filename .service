@@ -1,0 +1,14 @@
+[Unit]
+Description=Start 
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/bin/python3 /home/pi/myscript.py
+WorkingDirectory=/Users/pjark/Documents/GitHub/cicada
+StandardOutput=journal
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target

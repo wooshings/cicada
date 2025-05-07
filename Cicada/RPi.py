@@ -13,6 +13,22 @@ except ImportError:
 
 import RPi.GPIO as GPIO
 
+processes:list = []
+
+def add_process(node):
+    processes.append(node)
+    print("added process")
+
+async def run_process():
+    print("run processes")
+    try:
+        while True:
+            for p in processes:
+                await p.start_process()
+    except KeyboardInterrupt:
+        print("\nStopping program. Goodbye!")
+        quit()
+asyncio.run(run_process())
 
 class Nymph():
     def __init__(self, host: str, port: int, topics: list) -> None:
@@ -24,7 +40,7 @@ class Nymph():
 
         self.start()
         self._ready()
-        asyncio.run(self.start_process())
+        add_process(self.start_process)
 
     def start(self):
         if self.host == "":
@@ -35,15 +51,10 @@ class Nymph():
         self.mqttc.on_message = self.message_callback
 
     async def start_process(self):
-        while True:
-            try:
-                self.mqttc.loop_read()
-                self._process()
-                self.mqttc.loop_write()
-                sleep(1/self.tick_speed)
-            except KeyboardInterrupt:
-                print("\nStopping program. Goodbye!")
-                quit()
+        self.mqttc.loop_read()
+        self._process()
+        self.mqttc.loop_write()
+        sleep(1/self.tick_speed)
 
     def _ready(self):
         pass
