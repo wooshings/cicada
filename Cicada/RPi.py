@@ -1,32 +1,34 @@
-import RPi.GPIO as GPIO
-import sys
-import importlib.util
 import paho.mqtt.client as mqtt
 from time import sleep
 import asyncio
+import importlib.util
+import sys
 
 try:
     importlib.util.find_spec("RPi.GPIO")
 except ImportError:
     import fake_rpi
     sys.modules['RPi'] = fake_rpi.RPi     # Fake RPi
-    sys.modules['RPi.GPIO'] = fake_rpi.RPi.GPIO  # Fake GPIO
+    sys.modules['RPi.GPIO'] = fake_rpi.RPi.GPIO # Fake GPIO
 
-processes = []
+import RPi.GPIO as GPIO
 
+processes:list = []
 
-def add_process():
-    def wrapper(func):
-        processes.append(func)
-        return func
-    return wrapper
-
+def add_process(node):
+    processes.append(node)
+    print("added process")
 
 async def run_process():
-    for p in processes:
-        p()
+    print("run processes")
+    try:
+        while True:
+            for p in processes:
+                await p.start_process()
+    except KeyboardInterrupt:
+        print("\nStopping program. Goodbye!")
+        quit()
 asyncio.run(run_process())
-
 
 class Nymph():
     def __init__(self, host: str, port: int, topics: list) -> None:
@@ -38,7 +40,7 @@ class Nymph():
 
         self.start()
         self._ready()
-        asyncio.run(self.start_process())
+        add_process(self.start_process)
 
     def start(self):
         if self.host == "":
@@ -48,16 +50,11 @@ class Nymph():
         self.mqttc.on_connect = self.connect_callback
         self.mqttc.on_message = self.message_callback
 
-    @add_process()
     async def start_process(self):
-        try:
-            self.mqttc.loop_read()
-            self._process()
-            self.mqttc.loop_write()
-            sleep(1/self.tick_speed)
-        except KeyboardInterrupt:
-            print("\nStopping program. Goodbye!")
-            quit()
+        self.mqttc.loop_read()
+        self._process()
+        self.mqttc.loop_write()
+        sleep(1/self.tick_speed)
 
     def _ready(self):
         pass
@@ -157,4 +154,5 @@ class Pin():
         if GPIO.input(self.pin):
             return 1
         return 0
+
 

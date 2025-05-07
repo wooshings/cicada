@@ -3,6 +3,25 @@ from utime import sleep
 import network
 import uasyncio
 
+
+processes:list = []
+
+def add_process(node):
+    processes.append(node)
+    print("added process")
+
+async def run_process():
+    print("run processes")
+    try:
+        while True:
+            for p in processes:
+                await p.start_process()
+    except KeyboardInterrupt:
+        print("\nStopping program. Goodbye!")
+        quit()
+uasyncio.run(run_process())
+
+
 class Nymph():
 	def __init__(self, host: str, port: int, topics: list) -> None:
 		self.host = host
@@ -12,10 +31,11 @@ class Nymph():
 		self.tick_speed = 20
 		
 		self.start()
-		uasyncio.run(self.start_process())
+		add_process(self.start_process)
 
 	def start(self):
 		if self.host == "": return
+		self._ready()
 		while True:
 			try:
 				self.mqttc.connect()
@@ -29,15 +49,9 @@ class Nymph():
 		self._on_connect()
 			
 	async def start_process(self):
-		self._ready()
-		while True:
-			try:
-				self._process()
-				self.mqttc.check_msg()
-				await uasyncio.sleep(1/self.tick_speed)
-			except KeyboardInterrupt:
-				print("\nStopping program. Goodbye!")
-				break
+		self._process()
+		self.mqttc.check_msg()
+		await uasyncio.sleep(1/self.tick_speed)
 
 	def _ready(self):
 		pass
