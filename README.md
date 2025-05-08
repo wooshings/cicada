@@ -4,7 +4,7 @@
 
 <br>
 
-<img src="banner.png" alt="cicada logo"/> 
+<img src="banner.png" alt="cicada logo"/>
 
 <br>
 An easy to use python library for creating Escape Room puzzles using Raspberry Pi, built to feel like a Game Engine.
@@ -85,10 +85,26 @@ Pins have several helpful methods:
   - Toggles the pin on/off
 - value()
   - Returns the current value of the pin, 1 or 0
+
+#### Inputs
+
+##### Button
+
+Buttons are one of the most common typs of inputs used for aany escape game, and Cicada makes it easy to set up and use new buttons with the Button class.
+
+```python
+from Cicada.Inputs import Button
+
+pin = 4
+new_button = Button(4)
+```
+
 - is_pressed()
-  - Checks if the input is 1, returns a boolean
+  - Returns True or False if the button is pressed every tick
 - is_just_pressed()
-  - The same as is_pressed, but only triggers once per input
+  - The same as is_pressed() but only returns on the initial press
+- is_just_released()
+  - The opposite of is_just_pressed()
 
 ### Network Node
 
@@ -140,7 +156,7 @@ class Main(Nymph):
 
     # Runs every tick
     def _process(self):
-        if self.input.is_pressed():
+        if self.input.value() == 1:
             self.led.on()
         else:
             self.led.off()
@@ -163,7 +179,7 @@ class Main(Nymph):
 
     # Runs every tick
     def _process(self):
-        if self.input.is_pressed():
+        if self.input.value() == 1:
             self.led.on()
         else:
             self.led.off()
@@ -187,5 +203,5 @@ Cicada offers a simple python script that generates a service file.
 You can clone the repository and run `serve.py`, or..
 
 ```
-curl https://raw.githubusercontent.com/wooshings/cicada/refs/heads/main/serve.py > tmp_serve.py && python3 tmp_serve.py --temp
+curl https://raw.githubusercontent.com/wooshings/cicada/refs/heads/main/serve.py | python3
 ```
