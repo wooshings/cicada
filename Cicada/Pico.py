@@ -31,7 +31,6 @@ class Nymph():
 		self.tick_speed = 20
 		
 		self.start()
-		add_process(self.start_process)
 
 	def start(self):
 		if self.host == "": return
@@ -86,13 +85,13 @@ class Network():
 
 def NetworkNode(host="localhost", port=1883, topics=[]):
     def wrapper(cls):
-        new_node = cls(host, port, topics)
+        new_node = cls(host, port, topics); add_process(new_node)
         return new_node
     return wrapper
 
 def Node():
     def wrapper(cls):
-        new_node = cls("", 0, [])
+        new_node = cls("", 0, []); add_process(new_node)
         return new_node
     return wrapper
 

@@ -40,7 +40,6 @@ class Nymph():
 
         self.start()
         self._ready()
-        add_process(self.start_process)
 
     def start(self):
         if self.host == "":
@@ -98,6 +97,7 @@ class Property():
 def NetworkNode(host="localhost", port=1883, topics=[]):
     def wrapper(cls):
         new_node = cls(host, port, topics)
+        add_process(new_node)
         return new_node
     return wrapper
 
@@ -105,6 +105,7 @@ def NetworkNode(host="localhost", port=1883, topics=[]):
 def Node():
     def wrapper(cls):
         new_node = cls("", 0, [])
+        add_process(new_node)
         return new_node
     return wrapper
 
