@@ -31,4 +31,5 @@ class Button(Pin):
             return True
 
 
-    
+class Dial(Button):
+

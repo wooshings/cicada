@@ -35,19 +35,19 @@ uv install "git+https://github.com/wooshdude/cicada[fallback]"
 
 ### Nodes
 
-Cicada uses Nodes (called Nymphs), which are decorated subclasses.
+Cicada uses Nodes (called Cidadas), which are decorated subclasses.
 
 ```python
-from Cicada.RPi import Nymph, Node
+from Cicada.RPi import Cicada, Node
 
 @Node
-class Main(Nymph):
+class Main(Cicada):
     def _ready(self):
 
     def _process(self):
 ```
 
-Cicada exposes several functions through the Nymph class, but the two most important are `_ready` and `_process`.
+Cicada exposes several functions through the Cicadaclass, but the two most important are `_ready` and `_process`.
 
 **Ready**
 `_ready()`
@@ -111,11 +111,11 @@ new_button = Button(4)
 Cicada has optional support for MQTT using the NetworkNode decorator.
 
 ```python
-from Cicada.RPi import Nymph, NetworkNode
+from Cicada.RPi import Cicada, NetworkNode
 
 topics = ["topics to subscribe to go here"]
 @NetworkNode("localhost", 1883, topics)
-class Main(Nymph):
+class Main(Cicada):
     def _on_connect():
 
     def _on_message(msg):
@@ -143,10 +143,10 @@ A Network Node works the same as a Node, but offers a few extra functions tailor
 ### Node Example
 
 ```python
-from Cicada.RPi import Nymph, Node, Pin
+from Cicada.RPi import Cicada, Node, Pin
 
 @Node
-class Main(Nymph):
+class Main(Cicada):
     # Runs once at the start of the programm
     def _ready(self):
         self.led = Pin(4, Pin.OUT)
@@ -165,11 +165,11 @@ class Main(Nymph):
 ### NetworkNode Example
 
 ```python
-from Cicada.RPi import Nymph, Node, Pin
+from Cicada.RPi import Cicada, Node, Pin
 
 topics = ["test/one", "test/two"]
 @NetworkNode("localhost", 1883, topics)
-class Main(Nymph):
+class Main(Cicada):
     # Runs once at the start of the programm
     def _ready(self):
         self.led = Pin(4, Pin.OUT)

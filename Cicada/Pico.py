@@ -22,7 +22,7 @@ async def run_process():
 uasyncio.run(run_process())
 
 
-class Nymph():
+class Cicada():
 	def __init__(self, host: str, port: int, topics: list) -> None:
 		self.host = host
 		self.port = port
