@@ -28,7 +28,7 @@ If you want to write your script on a machine that isn't a Raspberry Pi, you can
 ```
 pip install "git+https://github.com/wooshdude/cicada[fallback]"
     -- or --
-uv install "git+https://github.com/wooshdude/cicada[fallback]"
+uv add "git+https://github.com/wooshdude/cicada[fallback]"
 ```
 
 ## How to use
