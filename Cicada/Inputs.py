@@ -38,7 +38,7 @@ class RFID(SimpleMFRC522):
         self.last_id = None
         self.can_scan = True
 
-    def scan(self) -> str | None:
+    def scan(self) -> str:
         try:
             current_id, _ = self.read()
 
@@ -47,9 +47,9 @@ class RFID(SimpleMFRC522):
                 self.can_scan = False 
                 return current_id
 
-            return None
+            return "0"
         except:
             self.can_scan = True
             self.last_id = None
-            return None
+            return "0"
 
