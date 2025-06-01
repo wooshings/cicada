@@ -1,4 +1,5 @@
 from Cicada.RPi import Pin
+from mfrc522 import SimpleMFRC522
 
 
 class Button(Pin):
@@ -31,5 +32,24 @@ class Button(Pin):
             return True
 
 
-class Dial(Button):
+class RFID(SimpleMFRC522):
+    def __init__(self):
+        super().__init__()
+        self.last_id = None
+        self.can_scan = True
+
+    def scan(self) -> str | None:
+        try:
+            current_id, _ = self.read()
+
+            if self.can_scan and current_id != self.last_id:
+                self.last_id = current_id
+                self.can_scan = False 
+                return current_id
+
+            return None
+        except:
+            self.can_scan = True
+            self.last_id = None
+            return None
 
