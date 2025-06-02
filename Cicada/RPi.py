@@ -16,7 +16,6 @@ import RPi.GPIO as GPIO
 
 class Cicada():
     def __init__(self, host: str, port: int, topics: list) -> None:
-        print("balls")
         self.host = host
         self.port = port
         self.topics = topics
@@ -37,7 +36,6 @@ class Cicada():
         asyncio.run(self.start_process())
 
     async def start_process(self):
-        print("fuck")
         try: 
             while True:
                 self.mqttc.loop_read()
