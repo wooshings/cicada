@@ -13,25 +13,10 @@ except ImportError:
 
 import RPi.GPIO as GPIO
 
-processes:list = []
-
-def add_process(node):
-    processes.append(node)
-    print("added process")
-
-async def run_process():
-    print("run processes")
-    try:
-        while True:
-            for p in processes:
-                await p.start_process()
-    except KeyboardInterrupt:
-        print("\nStopping program. Goodbye!")
-        quit()
-asyncio.run(run_process())
 
 class Cicada():
     def __init__(self, host: str, port: int, topics: list) -> None:
+        print("balls")
         self.host = host
         self.port = port
         self.topics = topics
@@ -40,6 +25,7 @@ class Cicada():
 
         self.start()
         self._ready()
+        asyncio.run(self.start_process())
 
     def start(self):
         if self.host == "":
@@ -48,12 +34,19 @@ class Cicada():
 
         self.mqttc.on_connect = self.connect_callback
         self.mqttc.on_message = self.message_callback
+        asyncio.run(self.start_process())
 
     async def start_process(self):
-        self.mqttc.loop_read()
-        self._process()
-        self.mqttc.loop_write()
-        sleep(1/self.tick_speed)
+        print("fuck")
+        try: 
+            while True:
+                self.mqttc.loop_read()
+                self._process()
+                self.mqttc.loop_write()
+                sleep(1/self.tick_speed)
+        except KeyboardInterrupt:
+            print("\nStopping program. Goodbye!")
+            quit()
 
     def _ready(self):
         pass
@@ -94,10 +87,9 @@ class Property():
         return str(self.value)
 
 
-def NetworkNode(host="localhost", port=1883, topics=[]):
+def NetworkNode(host="localhost", port=1883, topics=None):
     def wrapper(cls):
         new_node = cls(host, port, topics)
-        add_process(new_node)
         return new_node
     return wrapper
 
@@ -105,7 +97,6 @@ def NetworkNode(host="localhost", port=1883, topics=[]):
 def Node():
     def wrapper(cls):
         new_node = cls("", 0, [])
-        add_process(new_node)
         return new_node
     return wrapper
 

@@ -6,22 +6,6 @@ import uasyncio
 
 processes:list = []
 
-def add_process(node):
-    processes.append(node)
-    print("added process")
-
-async def run_process():
-    print("run processes")
-    try:
-        while True:
-            for p in processes:
-                await p.start_process()
-    except KeyboardInterrupt:
-        print("\nStopping program. Goodbye!")
-        quit()
-uasyncio.run(run_process())
-
-
 class Cicada():
 	def __init__(self, host: str, port: int, topics: list) -> None:
 		self.host = host
@@ -48,9 +32,14 @@ class Cicada():
 		self._on_connect()
 			
 	async def start_process(self):
-		self._process()
-		self.mqttc.check_msg()
-		await uasyncio.sleep(1/self.tick_speed)
+		try:
+			while True:
+				self._process()
+				self.mqttc.check_msg()
+				await uasyncio.sleep(1/self.tick_speed)
+		except KeyboardInterrupt:
+			print("\nStopping program. Goodbye!")
+			quit()
 
 	def _ready(self):
 		pass
@@ -82,16 +71,15 @@ class Network():
 			print('Waiting for connection...')
 			sleep(1)
 		print("Connected to WiFi")
-
 def NetworkNode(host="localhost", port=1883, topics=[]):
     def wrapper(cls):
-        new_node = cls(host, port, topics); add_process(new_node)
+        new_node = cls(host, port, topics)
         return new_node
     return wrapper
 
 def Node():
     def wrapper(cls):
-        new_node = cls("", 0, []); add_process(new_node)
+        new_node = cls("", 0, [])
         return new_node
     return wrapper
 
