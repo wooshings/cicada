@@ -44,6 +44,7 @@ class Cicada():
                 sleep(1/self.tick_speed)
         except KeyboardInterrupt:
             print("\nStopping program. Goodbye!")
+            GPIO.cleanup()
             quit()
 
     def _ready(self):
