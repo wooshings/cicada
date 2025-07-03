@@ -11,6 +11,11 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+all = [
+    "rpi-gpio>=0.7.1",
+    "mfrc522>=0.0.7",
+    "paho-mqtt>=2.1.0",
+]
 fallback = [
     "fake-rpi>=0.7.1",
     "paho-mqtt>=2.1.0",

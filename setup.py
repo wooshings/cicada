@@ -12,8 +12,4 @@ setup(
     long_description=open('README.md').read(),
     include_package_data=True,
     packages=['Cicada'],
-    extras_require={
-        'all': ['paho-mqtt', 'RPi.GPIO', 'mfrc522'],
-        'fallback': ['paho-mqtt', 'fake_rpi'],
-    },
 )
