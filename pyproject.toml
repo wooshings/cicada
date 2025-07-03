@@ -20,6 +20,9 @@ fallback = [
     "fake-rpi>=0.7.1",
     "paho-mqtt>=2.1.0",
 ]
+lite = [
+    "paho-mqtt>=2.1.0",
+]
 
 [build-system]
 requires = ["setuptools"]
