@@ -1,8 +1,9 @@
 from Cicada.RPi import Pin
 
-import importlib.util
-if importlib.util.find_spec("mfrc522"):
+try:
     from mfrc522 import SimpleMFRC522
+except ImportError:
+    mfrc522 = None
 
 
 class Button(Pin):
