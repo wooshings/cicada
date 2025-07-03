@@ -14,6 +14,6 @@ setup(
     packages=['Cicada'],
     extras_require={
         'all': ['paho-mqtt', 'RPi.GPIO', 'mfrc522'],
-        'fallback': ['paho-mqtt', 'fake_rpi', 'mfrc522-python'],
+        'fallback': ['paho-mqtt', 'fake_rpi'],
     },
 )
