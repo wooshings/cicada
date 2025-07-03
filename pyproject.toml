@@ -4,11 +4,6 @@ version = "0.3.3"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = [
-    "rpi-gpio>=0.7.1",
-    "mfrc522>=0.0.7",
-    "paho-mqtt>=2.1.0",
-]
 
 [project.optional-dependencies]
 all = [
