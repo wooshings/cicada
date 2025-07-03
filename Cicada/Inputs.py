@@ -3,7 +3,7 @@ from Cicada.RPi import Pin
 try:
     from mfrc522 import SimpleMFRC522
 except ImportError:
-    mfrc522 = None
+    SimpleMFRC522 = None
 
 
 class Button(Pin):
