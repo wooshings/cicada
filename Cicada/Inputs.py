@@ -61,3 +61,43 @@ class RFID(SimpleMFRC522):
             return current_id
 
         return
+
+class Keypad3():
+    def __init__(self, c1: int, c2: int, c3: int, r1: int, r2: int, r3: int, r4: int) -> None:
+        self.c1: Pin = Pin(c1, Pin.IN)
+        self.c2: Pin = Pin(c2, Pin.IN)
+        self.c3: Pin = Pin(c3, Pin.IN)
+        self.r1: Pin = Pin(r1, Pin.IN)
+        self.r2: Pin = Pin(r2, Pin.IN)
+        self.r3: Pin = Pin(r3, Pin.IN)
+        self.r4: Pin = Pin(r4, Pin.IN)
+
+        self.rows = [self.r1, self.r2, self.r3, self.r4]
+        self.cols = [self.c1, self.c2, self.c3]
+ 
+        self.nums = {
+            1: (Button(r1), Button(c1)),
+            2: (Button(r1), Button(c2)),
+            3: (Button(r1), Button(c3)),
+            4: (Button(r2), Button(c1)),
+            5: (Button(r2), Button(c2)),
+            6: (Button(r2), Button(c3)),
+            7: (Button(r3), Button(c1)),
+            8: (Button(r3), Button(c2)),
+            9: (Button(r3), Button(c3)),
+            0: (Button(r4), Button(c2)),
+        }
+
+        self.sym = {
+            "*": (Button(r4), Button(c1)),
+            "#": (Button(r4), Button(c3))
+        }
+
+    def get_num_just_pressed(self):
+        for k,v in self.nums.items():
+            if v[0].is_just_pressed() and v[1].is_just_pressed():
+                return k
+
+
+
+
