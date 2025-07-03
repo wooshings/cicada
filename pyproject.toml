@@ -13,7 +13,6 @@ dependencies = [
 [project.optional-dependencies]
 fallback = [
     "fake-rpi>=0.7.1",
-    "mfrc522-python>=0.0.7",
     "paho-mqtt>=2.1.0",
 ]
 
