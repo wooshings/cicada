@@ -1,9 +1,10 @@
-from Cicada.RPi import Pin, Node, Nymph
+from Cicada.RPi import Node, Cicada
+from Cicada.Inputs import Button
 
 @Node()
-class Main(Nymph):
+class Main(Cicada):
 	def _ready(self):
-		self.button = Pin(1, Pin.IN)
+		self.button = Button(1)
 	
 	def _process(self):
 		if self.button.is_pressed():

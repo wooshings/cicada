@@ -4,9 +4,7 @@ import argparse
 import sys
 
 parser = argparse.ArgumentParser(prog="Cicada service file creator.", description="Create and apply service files to automatically run your scripts.")
-parser.add_argument("--temp", action="store_true")
 args = parser.parse_args()
-
 
 name: str = ""
 apply: str = ""
@@ -29,7 +27,7 @@ def create():
         python_path = "bin/python3"
     elif os.path.exists(".venv/bin/python3"):
         python_path = ".venv/bin/python3"
-    print(f"Found path to Python3 at {python_path}")
+    print(f"Found path to Python virtual environment at {python_path}")
         
     with open(f"{name}.service", "w") as f:
         f.write(f'''[Unit]
@@ -42,7 +40,7 @@ ExecStart={python_path} /home/pi/myscript.py
 WorkingDirectory={os.getcwd()}
 StandardOutput=journal
 Restart=always
-User=pi
+User={os.getlogin()}
 
 [Install]
 WantedBy=multi-user.target''')

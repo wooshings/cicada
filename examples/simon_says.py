@@ -1,4 +1,5 @@
-from Cicada.RPi import Nymph, Node, Pin
+from Cicada.RPi import Cicada, Node, Pin
+from Cicada.Inputs import Button
 import random
 from enum import Enum
 from time import sleep
@@ -10,12 +11,12 @@ class Turn(Enum):
 
 class LedButton():
     def __init__(self, in_pin, out_pin):
-        self.input = Pin(in_pin, Pin.IN)
+        self.input = Button(in_pin)
         self.output = Pin(out_pin, Pin.OUT)
         self.output.off()
 
 @Node()
-class Puzzle1(Nymph):
+class Puzzle1(Cicada):
     def _ready(self):
         self.buttons = {"white": LedButton(17, 27), "green": LedButton(16, 20), "blue": LedButton(26, 19), "yellow": LedButton(23, 24)}
 

@@ -1,8 +1,8 @@
-from Cicada.RPi import NetworkNode, Nymph
+from Cicada.RPi import NetworkNode, Cicada
 
 topics = ["example/topic"]
 @NetworkNode("localhost", 1883, topics)
-class Main(Nymph):
+class Main(Cicada):
 	def _on_connect(self):
 		print("Connected to MQTT broker.")
 		self.publish("test/topics", "this is a example message!")

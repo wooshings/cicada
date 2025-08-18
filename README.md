@@ -205,3 +205,9 @@ You can clone the repository and run `serve.py`, or..
 ```
 curl https://raw.githubusercontent.com/wooshings/cicada/refs/heads/main/serve.py | python3
 ```
+
+## TODO
+- Modularize creating new processes
+- Smart dial inputs
+- Screw all everything and convert backend to C for arduino support (kill me)
+- Add immdiate-mode support for when all you need is to check if a button is pressed and turn on an output

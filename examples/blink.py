@@ -1,8 +1,8 @@
-from Cicada.RPi import Pin, Node, Nymph
+from Cicada.RPi import Pin, Node, Cicada
 from time import sleep
 
 @Node()
-class Main(Nymph):
+class Main(Cicada):
 	def _ready(self):
 		self.led = Pin(1, Pin.OUT)
 		self.led.on()
