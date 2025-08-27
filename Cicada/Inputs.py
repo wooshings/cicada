@@ -1,4 +1,9 @@
-from Cicada.RPi import Pin
+try:
+    import Cicada.RPi as _backend
+except ImportError:
+    import Cicada.Pico as _backend
+
+Pin = _backend.Pin
 
 try:
     from mfrc522 import SimpleMFRC522
