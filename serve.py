@@ -13,9 +13,7 @@ apply: str = ""
 def get_input():
     global name
     global apply
-    name = input("Choose name for service: ")
-    apply = input(
-        "Would you like the service to be automatically applied?: [y/n] ")
+    name = os.path.basename(os.getcwd())
 
 
 def create():
@@ -47,9 +45,6 @@ WantedBy=multi-user.target''')
 
 
 def enable():
-    if not apply == "y":
-        return
-
     os.system(
         f"sudo mv {name}.service /etc/systemd/system/{name}.service")
     os.system("sudo systemctl daemon-reload")
@@ -58,7 +53,6 @@ def enable():
 
 
 if __name__ == "__main__":
-    get_input()
     create()
     enable()
     if args.temp:
