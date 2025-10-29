@@ -13,7 +13,8 @@ apply: str = ""
 def get_input():
     global name
     global apply
-    name = os.path.basename(os.getcwd())
+    name = "cicada_" + os.path.basename(os.getcwd())
+    print(f"Creating new service '{name}'")
 
 
 def create():
@@ -53,7 +54,6 @@ def enable():
 
 
 if __name__ == "__main__":
+    get_input()
     create()
     enable()
-    if args.temp:
-        os.remove(sys.argv[0])
