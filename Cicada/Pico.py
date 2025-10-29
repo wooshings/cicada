@@ -20,12 +20,18 @@ class Cicada():
 	def start(self):
 		self._ready()
 		if self.host == "": return
-		while True:
+		attempts = 0
+		max_attempts = 10
+		while attempts < max_attempts:
 			try:
 				self.mqttc.connect()
 				break
 			except OSError:
 				print("Connection to broker failed. Attempting to reconnect.")
+				attempts += 1
+		if attempts >= max_attempts:
+			print("Could not connect to broker. Continuing as Node.")
+			return
 		self.mqttc.set_callback(self.message_callback)
 
 		for topic in self.topics:
@@ -69,7 +75,10 @@ class Network():
 		self.wlan = network.WLAN(network.STA_IF)
 		self.wlan.active(True)
 		self.wlan.connect(ssid, password)
-		while self.wlan.isconnected() == False:
+		self.attempts = 0
+		self.max_attempts = 10
+		while self.wlan.isconnected() == False or self.attempts < self.max_attempts:
+			self.attempts += 1
 			print('Waiting for connection...')
 			sleep(1)
 		print("Connected to WiFi")

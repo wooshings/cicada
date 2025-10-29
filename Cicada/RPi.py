@@ -23,16 +23,14 @@ class Cicada():
         self.tick_speed = 20
 
         self.start()
-        self._ready()
-        asyncio.run(self.start_process())
 
     def start(self):
         if self.host == "":
-            return
-        self.mqttc.connect(self.host, self.port, 60)
+            self.mqttc.connect(self.host, self.port, 60)
 
-        self.mqttc.on_connect = self.connect_callback
-        self.mqttc.on_message = self.message_callback
+            self.mqttc.on_connect = self.connect_callback
+            self.mqttc.on_message = self.message_callback
+        self._ready()
         asyncio.run(self.start_process())
 
     async def start_process(self):
