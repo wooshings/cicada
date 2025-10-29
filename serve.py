@@ -8,13 +8,16 @@ args = parser.parse_args()
 
 name: str = ""
 apply: str = ""
+path: str = ""
 
 
 def get_input():
     global name
     global apply
+    global path
     name = "cicada_" + os.path.basename(os.getcwd())
     print(f"Creating new service '{name}'")
+    path = os.path.abspath(os.getcwd())
 
 
 def create():
@@ -35,7 +38,7 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
-ExecStart={python_path} /home/pi/myscript.py
+ExecStart={path}/{python_path} {path}/main.py
 WorkingDirectory={os.getcwd()}
 StandardOutput=journal
 Restart=always
