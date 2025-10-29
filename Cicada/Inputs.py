@@ -45,7 +45,7 @@ class Button(Pin):
         super().__init__(pin, Pin.IN)
 
     def is_pressed(self):
-        if self.value() == 1:
+        if self.value() == 0:
             return True
         return False
 
