@@ -3,6 +3,7 @@ from time import sleep
 import asyncio
 import importlib.util
 import sys
+import traceback
 
 try:
     importlib.util.find_spec("RPi.GPIO")
@@ -40,8 +41,8 @@ class Cicada():
                 self._process()
                 self.mqttc.loop_write()
                 sleep(1/self.tick_speed)
-        except Exception as e:
-            print(e)
+        except Exception:
+            print(traceback.format_exc())
         except KeyboardInterrupt:
             print("\nStopping program. Goodbye!")
         finally:
