@@ -25,7 +25,7 @@ class Cicada():
         self.start()
 
     def start(self):
-        if self.host == "":
+        if not self.host == "":
             self.mqttc.connect(self.host, self.port, 60)
 
             self.mqttc.on_connect = self.connect_callback
