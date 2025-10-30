@@ -40,6 +40,8 @@ class Cicada():
                 self._process()
                 self.mqttc.loop_write()
                 sleep(1/self.tick_speed)
+        except Exception as e:
+            print(e)
         except KeyboardInterrupt:
             print("\nStopping program. Goodbye!")
         finally:
@@ -64,7 +66,8 @@ class Cicada():
         self.mqttc.publish(topic, msg)
 
     def connect_callback(self, client, userdata, flags, reason_code):
-        print(f"Connected with result code {reason_code}")
+        if reason_code != 0:
+            print(f"Could not connect. Code {reason_code}")
         for topic in self.topics:
             client.subscribe(topic)
         self._on_connect()
